@@ -19,11 +19,12 @@ export default function Main(){
         () => JSON.parse(localStorage.getItem("savedRecipes")) || []
     )
 
-    // NEW: showSaved controls whether the saved recipes section is visible or hidden.
+    // showSaved controls whether the saved recipes section is visible or hidden.
     // It starts as false so saved recipes are not shown when the app first loads.
     const [showSaved, setShowSaved] = React.useState(false)
 
     async function getRecipe() {
+        // Clear the current recipe so the loading message appears
         setRecipe("")
         setLoading(true)
         setError(null)
@@ -54,6 +55,15 @@ export default function Main(){
         setIngredients(prevIngredients => [...prevIngredients, newIngredient])
     }
 
+    // NEW: removeIngredient filters out the ingredient that matches ingredientToRemove.
+    // filter() creates a new array containing everything EXCEPT the removed ingredient.
+    // This is the React way of removing items — never mutate state directly.
+    function removeIngredient(ingredientToRemove) {
+        setIngredients(prevIngredients => 
+            prevIngredients.filter(ingredient => ingredient !== ingredientToRemove)
+        )
+    }
+
     // saveRecipe adds the current recipe to savedRecipes state and
     // also writes the updated array to localStorage so it persists on refresh.
     // JSON.stringify converts the array to a string because localStorage
@@ -80,9 +90,12 @@ export default function Main(){
 
             {error && <p className="error-message">{error}</p>}
 
+            {/* NEW: removeIngredient is passed down as a prop so IngredientsList
+                can call it when the Remove button is clicked on any ingredient. */}
             {ingredients.length > 0 && <IngredientsList
-            ingredients={ingredients}
-            getRecipe={getRecipe}
+                ingredients={ingredients}
+                getRecipe={getRecipe}
+                removeIngredient={removeIngredient}
             />}
 
             {loading && <p className="loading-message">Chef Claude is cooking up your recipe...</p>}
@@ -96,7 +109,7 @@ export default function Main(){
                 <button onClick={getRecipe} disabled={loading}>Try Another Recipe</button>
             </>}
 
-            {/* NEW: This only renders if there is at least one saved recipe.
+            {/* This only renders if there is at least one saved recipe.
                 The toggle button switches showSaved between true and false.
                 "prev => !prev" is a shorthand that flips the current boolean value.
                 The button label changes dynamically based on the current state

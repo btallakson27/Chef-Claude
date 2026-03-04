@@ -1,7 +1,13 @@
 export default function IngredientsList(props) {
     
     const ingredientsListItems = props.ingredients.map(ingredient => (
-        <li key={ingredient}>{ingredient}</li>
+        <li key={ingredient}>
+            {ingredient}
+            {/* NEW: each ingredient now has a Remove button next to it.
+                onClick passes the specific ingredient name to removeIngredient
+                so only that ingredient gets removed from the list. */}
+            <button onClick={() => props.removeIngredient(ingredient)}>Remove</button>
+        </li>
     ))
     return (
         <section className="ingredients-list-container">
