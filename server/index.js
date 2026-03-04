@@ -14,8 +14,12 @@ app.use(cors({
 
 app.post("/api/recipe", async (req, res) => {
   try {
-    const { ingredients } = req.body
-    const recipe = await getRecipeFromChefClaude(ingredients)
+    // NEW: destructure "variation" from the request body alongside ingredients.
+    // variation is a random number sent from the frontend when "Try Another Recipe"
+    // is clicked. It gets passed to getRecipeFromChefClaude so the prompt
+    // can include an instruction to generate a different recipe.
+    const { ingredients, variation } = req.body
+    const recipe = await getRecipeFromChefClaude(ingredients, variation)
     res.json({ recipe })
   } catch (err) {
     res.status(500).json({ error: "Failed to generate recipe" })

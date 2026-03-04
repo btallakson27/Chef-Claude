@@ -24,13 +24,16 @@ export default function Main(){
     const [showSaved, setShowSaved] = React.useState(false)
 
     async function getRecipe() {
+        setRecipe("")
         setLoading(true)
         setError(null)
         try {
             const response = await fetch('https://chef-claude-repo.onrender.com/api/recipe', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ingredients }),
+                // Math.random() generates a unique number each request, preventing the AI from
+                // returning a cached or identical recipe when "Try Another Recipe" is clicked
+                body: JSON.stringify({ ingredients, variation: Math.random() }),
             })
             if (!response.ok) throw new Error("Something went wrong. Please try again.")
             const data = await response.json()
