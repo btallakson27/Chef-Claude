@@ -5,7 +5,9 @@ import ClaudeRecipe from "./ClaudeRecipe"
 export default function Main(){
 
     const [ingredients, setIngredients] = React.useState([])
-    const [recipe, setRecipe] = React.useState("")
+    const [recipe, setRecipe] = React.useState(
+    () => localStorage.getItem("currentRecipe") || ""
+    )   
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
 
@@ -29,6 +31,7 @@ export default function Main(){
             if (!response.ok) throw new Error("Something went wrong. Please try again.")
             const data = await response.json()
             setRecipe(data.recipe)
+            localStorage.setItem("currentRecipe", data.recipe)
         } catch (err) {
             setError(err.message)
         } finally {
@@ -82,6 +85,7 @@ export default function Main(){
             {recipe && <>
                 <ClaudeRecipe recipe={recipe} />
                 <button onClick={saveRecipe}>Save Recipe</button>
+                <button onClick={getRecipe} disabled={loading}>Try Another Recipe</button>
             </>}
 
             {/* NEW: This section only renders if there are saved recipes.
