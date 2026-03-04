@@ -1,12 +1,18 @@
 export default function IngredientsList(props) {
     
     const ingredientsListItems = props.ingredients.map(ingredient => (
-        <li key={ingredient}>
+        // NEW: added "ingredient-item" class to each li so we can target it in CSS
+        // for the hover effect that reveals the remove button
+        <li key={ingredient} className="ingredient-item">
             {ingredient}
-            {/* NEW: each ingredient now has a Remove button next to it.
-                onClick passes the specific ingredient name to removeIngredient
-                so only that ingredient gets removed from the list. */}
-            <button onClick={() => props.removeIngredient(ingredient)}>Remove</button>
+            {/* NEW: changed button text to ✕ for a cleaner look.
+                Added "remove-ingredient-btn" class for CSS styling.
+                The button is invisible by default and only appears on hover
+                via the CSS opacity transition on .ingredient-item:hover */}
+            <button 
+                className="remove-ingredient-btn"
+                onClick={() => props.removeIngredient(ingredient)}
+            >✕</button>
         </li>
     ))
     return (
