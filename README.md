@@ -1,5 +1,5 @@
 # 🍽️Chef Claude
-Chef Cladue is an AI powered virtual chef. The user adds ingredients they have on hand to the list and Chef Claude suggests a delicious recipe they can make when them. There is also an option to request a different recipe if the user doesn't want the one suggested.
+Chef Claude is an AI powered virtual chef. The user adds ingredients they have on hand to the list and Chef Claude suggests a delicious recipe they can make with them. There is also an option to request a different recipe if the user doesn't want the one suggested.
 
 ---
 
@@ -9,12 +9,12 @@ Chef Cladue is an AI powered virtual chef. The user adds ingredients they have o
 
 ## Features
 - User can add up to 10 ingredients they have on hand
-- Get a recipe button to actually get a suggested recipe
+- Get a Recipe button that sends ingredients to Chef Claude and returns a suggested recipe
 - A loading message to let the user know Chef Claude is working on a recipe
-- save recipe button so user can save all of their favorites
-- most recently searched recipe persists from last session so the user does not lose it
-- Try another recipe button if the user is not happy with the suggeested recipe
-- Remove button appears when hovering over ingredients in case the user wants to remove an ingredient or mispells is
+- Save recipe button so user can save all of their favorites
+- Most recently searched recipe persists from last session so the user does not lose it
+- Try another recipe button if the user is not happy with the suggested recipe
+- Remove button appears when hovering over ingredients in case the user wants to remove an ingredient or misspells it
 
 ---
 
@@ -25,7 +25,7 @@ Chef Cladue is an AI powered virtual chef. The user adds ingredients they have o
 | Backend | Node.js, Express |
 | AI | Anthropic SDK | 
 | Styling | CSS |
-| Deployment | Render (frontend + backend )
+| Deployment | Render (frontend + backend ) |
 
 ---
 
@@ -49,7 +49,7 @@ React Frontend
 
 Frontend and backend are deployed as separate services on Render.
 
-  ```
+```
 
 ---
 
@@ -105,7 +105,7 @@ npm run dev
 |----------|-------------|
 | `ANTHROPIC_API_KEY` | Your secret key from the Anthropic console |
 
-Environment variables are stored in a `.env` file that is never commited to GitHub (it is listed in `.gitignore`). This keeps your API key secure and off of version control. On Render, environment variables are set dieectly in the service dashboard. 
+Environment variables are stored in a `.env` file that is never committed to GitHub (it is listed in `.gitignore`). This keeps your API key secure and off of version control. On Render, environment variables are set directly in the service dashboard. 
 
 ---
 
@@ -113,8 +113,8 @@ Environment variables are stored in a `.env` file that is never commited to GitH
 
 Both the frontend and backend are deployed on [Render](https://render.com).
 
-- The **backend** runs ass a Node.js web service and exposes a single endpoint: `POST /api/recipe`
-- The **frontend** os built with `npm run build` and served as a static site
+- The **backend** runs as a Node.js web service and exposes a single endpoint: `POST /api/recipe`
+- The **frontend** is built with `npm run build` and served as a static site
 - CORS is configured on the backend to only accept requests from the deployed frontend URL
 
 ---
